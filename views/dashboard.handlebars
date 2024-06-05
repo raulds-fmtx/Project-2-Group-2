@@ -1,0 +1,21 @@
+<button id="add-post-btn">Add New Post</button>
+
+{{#if posts.length}}
+  {{#each posts}}
+    <div class="post">
+      <h2>{{this.title}}</h2>
+      <p>{{this.createdAt}}</p>
+      <a href="/post/{{this.id}}">Read More</a>
+      <div>
+        <button class="edit-post-btn" data-id="{{this.id}}">Edit</button>
+        <button class="delete-post-btn" data-id="{{this.id}}">Delete</button>
+      </div>
+    </div>
+  {{/each}}
+{{else}}
+  <p>No posts yet</p>
+{{/if}}
+
+<script src="./js/addPost.js"></script>
+<script src="./js/editPost.js"></script>
+<script src="./js/deletePost.js"></script>
