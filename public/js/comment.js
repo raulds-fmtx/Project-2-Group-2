@@ -5,17 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
     commentForm.addEventListener("submit", async (event) => {
       event.preventDefault();
 
-      const commentText = document
-        .querySelector('textarea[name="comment_text"]')
-        .value.trim();
-      const postId = window.location.pathname.split("/").pop(); // Assumes the post ID is the last part of the URL
+      const commentText = document.querySelector("#comment-text").value.trim();
+      const postId = window.location.toString().split("/").pop();
 
       if (commentText) {
+
         const response = await fetch(`/api/comments`, {
           method: "POST",
           body: JSON.stringify({
-            comment_text: commentText,
             post_id: postId,
+            comment_text: commentText,
           }),
           headers: {
             "Content-Type": "application/json",
