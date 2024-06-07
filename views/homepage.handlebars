@@ -2,6 +2,8 @@
   {{#each posts}}
     <div class="post">
       <h2>{{this.title}}</h2>
+      <button class="like-btn" data-id="{{this.id}}">Like</button>
+      <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
       <p>By {{this.user.username}} on {{this.createdAt}}</p>
       <a href="/post/{{this.id}}">Read More</a>
     </div>
@@ -9,3 +11,5 @@
 {{else}}
   <p>No posts yet</p>
 {{/if}}
+
+<script src="/js/likePost.js"></script>

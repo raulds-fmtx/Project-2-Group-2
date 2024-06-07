@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post } = require("../../models");
+const { Post, Like } = require("../../models");
 const withAuth = require("../../utils/auth");
 
 // Create new post
@@ -53,6 +53,41 @@ router.delete("/:id", withAuth, async (req, res) => {
 
     res.status(200).json(postData);
   } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Route to like a post
+router.put('/like/:id', withAuth, async (req, res) => {
+  try {
+    const post = await Post.findByPk(req.params.id);
+    if (!post) {
+      res.status(404).json({ message: 'No post found with this id.'});
+    }
+
+    const existingLike = await Like.findOne({
+      where: {
+        user_id: req.session.user_id,
+        post_id: req.params.id,
+      }
+    });
+
+    if (existingLike) {
+      await existingLike.destroy();
+      post.numLikes -= 1;
+      await post.save();
+      res.status(200).json({ numLikes: post.numLikes, liked: false });
+    } else {
+      await Like.create({
+        user_id: req.session.user_id,
+        post_id: req.params.id,
+      });
+      post.numLikes += 1;
+      await post.save();
+      res.status(200).json({ numLikes: post.numLikes, liked: true});
+    }
+  } catch (err) {
+    console.error(err);
     res.status(500).json(err);
   }
 });
