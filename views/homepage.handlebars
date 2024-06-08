@@ -1,11 +1,172 @@
-{{#if posts.length}}
-  {{#each posts}}
-    <div class="post">
-      <h2>{{this.title}}</h2>
-      <p>By {{this.user.username}} on {{this.createdAt}}</p>
-      <a href="/post/{{this.id}}">Read More</a>
+<!--col for user data-->
+<div class="column is-one-quarter is-flex is-flex-direction-column is-align-items-center">
+  <p>Users</p>
+
+  <!-- User prof img -->
+  <figure class="image is-128x128">
+    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+  </figure>
+
+  <!--user data-->
+  <nav class="level">
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Posts</p>
+        <p class="title">x</p>
+      </div>
     </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Following</p>
+        <p class="title">x</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Followers</p>
+        <p class="title">x</p>
+      </div>
+    </div>
+    <div class="level-item has-text-centered">
+      <div>
+        <p class="heading">Likes</p>
+        <p class="title">x</p>
+      </div>
+    </div>
+  </nav>
+
+  <!--users recent photos-->
+  <div class="fixed-grid has-3-cols">
+    <div class="grid">
+      <div class="cell">Cell 1</div>
+      <div class="cell">Cell 2</div>
+      <div class="cell">Cell 3</div>
+      <div class="cell">Cell 4</div>
+      <div class="cell">Cell 5</div>
+      <div class="cell">Cell 6</div>
+      <div class="cell">Cell 7</div>
+      <div class="cell">Cell 8</div>
+      <div class="cell">Cell 9</div>
+    </div>
+  </div>
+</div>
+
+<!--center col for posts-->
+<div class="column is-half is-scrollable">
+  <!--placeholder post-->
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3">
+        <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image" />
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">John Smith</p>
+          <p class="subtitle is-6">@johnsmith</p>
+        </div>
+      </div>
+
+      <div class="content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
+        iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
+        <a href="#">#responsive</a>
+        <br />
+        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-image">
+      <figure class="image is-4by3">
+        <img src="https://bulma.io/assets/images/placeholders/1280x960.png" alt="Placeholder image" />
+      </figure>
+    </div>
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">John Smith</p>
+          <p class="subtitle is-6">@johnsmith</p>
+        </div>
+      </div>
+
+      <div class="content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
+        iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
+        <a href="#">#responsive</a>
+        <br />
+        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img src="https://bulma.io/assets/images/placeholders/96x96.png" alt="Placeholder image" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-4">John Smith</p>
+          <p class="subtitle is-6">@johnsmith</p>
+        </div>
+      </div>
+
+      <div class="content">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec
+        iaculis mauris. <a>@bulmaio</a>. <a href="#">#css</a>
+        <a href="#">#responsive</a>
+        <br />
+        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+      </div>
+    </div>
+  </div>
+  {{!-- {{#if posts.length}}
+  {{#each posts}}
+  <div class="post">
+    <h2>{{this.title}}</h2>
+    <p>By {{this.user.username}} on {{this.createdAt}}</p>
+    <a href="/post/{{this.id}}">Read More</a>
+  </div>
   {{/each}}
-{{else}}
+  {{else}}
   <p>No posts yet</p>
-{{/if}}
+  {{/if}} --}}
+
+</div>
+
+<!--col for chat-->
+<div class="column is-one-quarter is-flex is-flex-direction-column is-align-items-center">
+  <p>Chat</p>
+
+  <!--card for user chat-->
+  <div class="card chatCard">
+    <div class="card-content">
+      <div class="media">
+        <div class="media-left">
+          <figure class="image is-48x48">
+            <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+          </figure>
+        </div>
+        <div class="media-content">
+          <p class="title is-6">John Smith</p>
+          <p class="subtitle is-6">chat text</p>
+        </div>
+      </div>
+      <time datetime="2016-1-1">11:09 PM</time>
+    </div>
+  </div>
+</div>
+</div>
