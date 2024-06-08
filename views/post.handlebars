@@ -4,6 +4,9 @@
     <p>By {{user.username}} on {{createdAt}}</p>
   </header>
   <section>
+    {{#if image_url}}
+        <img src="{{image_url}}" height="auto" width="400" alt="Post Image">
+    {{/if}}
     <p>{{content}}</p>
     <button class="like-btn" data-id="{{id}}">Like</button>
     <span id="like-count-{{id}}">{{numLikes}} likes</span>

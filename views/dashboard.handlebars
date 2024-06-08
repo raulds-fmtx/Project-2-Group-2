@@ -1,9 +1,17 @@
-<button id="add-post-btn">Add New Post</button>
+<form id="new-post-form" enctype="multipart/form-data">
+  <input type="text" name="title" id="post-title" placeholder="Title" required>
+  <input type="file" name="image" id="post-image">
+  <textarea name="content" id="post-content" placeholder="Content" required></textarea>
+  <button type="submit">Create Post</button>
+</form>
 
 {{#if posts.length}}
   {{#each posts}}
     <div class="post">
       <h2>{{this.title}}</h2>
+      {{#if this.image_url}}
+        <img src="{{this.image_url}}" height="auto" width="400" alt="Post Image">
+      {{/if}}
       <button class="like-btn" data-id="{{this.id}}">Like</button>
       <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
       <p>{{this.createdAt}}</p>
