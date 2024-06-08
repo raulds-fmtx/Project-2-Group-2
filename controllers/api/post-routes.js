@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { Post, Like, User } = require("../../models");
+const { Post, Like } = require("../../models");
 const withAuth = require("../../utils/auth");
 const multer = require("multer");
-const path = require("path");
+const deleteFile = require("../../utils/file");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -53,19 +53,19 @@ router.put("/:id", withAuth, async (req, res) => {
 // Delete post
 router.delete("/:id", withAuth, async (req, res) => {
   try {
-    const postData = await Post.destroy({
-      where: {
-        id: req.params.id,
-        user_id: req.session.user_id,
-      },
-    });
-
-    if (!postData) {
+    const post = await Post.findByPk(req.params.id);
+    if (!post) {
       res.status(404).json({ message: "No post found with this id!" });
       return;
     }
 
-    res.status(200).json(postData);
+    // Delete the associated image file
+    if (post.image_url) {
+      deleteFile(post.image_url);
+    }
+
+    await post.destroy();
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
