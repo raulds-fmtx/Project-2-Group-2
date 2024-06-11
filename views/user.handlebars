@@ -8,10 +8,12 @@
   {{#each posts}}
     <li>
       <h4>{{this.title}}</h4>
-      {{!-- {{#if this.image_url}}
+      {{#if this.image_url}}
         <img src="{{this.image_url}}" height="auto" width="400" alt="Post Image">
-      {{/if}} --}}
+      {{/if}}
       <p>{{this.content}}</p>
+      <button class="like-btn" data-id="{{this.id}}">Like</button>
+      <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
       <p>Posted on {{this.createdAt}}</p>
     </li>
   {{/each}}
@@ -20,15 +22,16 @@
 <h3>Followers</h3>
 <ul>
   {{#each followers}}
-    <li>{{this.username}}</li>
+    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
   {{/each}}
 </ul>
 
 <h3>Following</h3>
 <ul>
   {{#each following}}
-    <li>{{this.username}}</li>
+    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
   {{/each}}
 </ul>
 
 <script src="/js/follow.js"></script>
+<script src="/js/likePost.js"></script>
