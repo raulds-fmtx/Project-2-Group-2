@@ -7,7 +7,7 @@
       {{/if}}
       <button class="like-btn" data-id="{{this.id}}">Like</button>
       <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
-      <p>By {{this.user.username}} on {{this.createdAt}}</p>
+      <p>By <a href="/user/{{this.user_id}}">{{this.user.username}}</a> on {{this.createdAt}}</p>
       <a href="/post/{{this.id}}">Read More</a>
     </div>
   {{/each}}

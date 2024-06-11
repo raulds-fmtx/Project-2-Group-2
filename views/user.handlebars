@@ -1,0 +1,34 @@
+<h2>{{username}}</h2>
+<button id="follow-btn" data-id="{{id}}" class="{{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+  {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+</button>
+
+<h3>Posts by {{username}}</h3>
+<ul>
+  {{#each posts}}
+    <li>
+      <h4>{{this.title}}</h4>
+      {{!-- {{#if this.image_url}}
+        <img src="{{this.image_url}}" height="auto" width="400" alt="Post Image">
+      {{/if}} --}}
+      <p>{{this.content}}</p>
+      <p>Posted on {{this.createdAt}}</p>
+    </li>
+  {{/each}}
+</ul>
+
+<h3>Followers</h3>
+<ul>
+  {{#each followers}}
+    <li>{{this.username}}</li>
+  {{/each}}
+</ul>
+
+<h3>Following</h3>
+<ul>
+  {{#each following}}
+    <li>{{this.username}}</li>
+  {{/each}}
+</ul>
+
+<script src="/js/follow.js"></script>

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post, Comment, User } = require("../models");
+const { Post, Comment, User, Follow } = require("../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -7,12 +7,13 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["username", "id"],
         },
       ],
     });
 
     const posts = postData.map((post) => post.get({ plain: true }));
+    
     res.render("homepage", {
       posts,
       logged_in: req.session.logged_in,
@@ -52,7 +53,7 @@ router.get("/post/:id", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["username"],
+          attributes: ["username", "id"],
         },
         {
           model: Comment,
@@ -64,6 +65,45 @@ router.get("/post/:id", async (req, res) => {
     const post = postData.get({ plain: true });
     res.render("post", {
       ...post,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/user/:id", async (req, res) => {
+  try {
+    const userData = await User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Post,
+          attributes: ["id", "title", "content", "createdAt"],
+          include: {
+            model: User,
+            attributes: ["username"],
+          },
+        },
+        {
+          model: User,
+          as: "followers",
+          attributes: ["id", "username"],
+        },
+        {
+          model: User,
+          as: "following",
+          attributes: ["id", "username"],
+        },
+      ],
+    });
+
+    const user = userData.get({ plain: true });
+    user.isFollowing = user.followers.some(
+      (follow) => follow.id === req.session.user_id
+    );
+
+    res.render("user", {
+      ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
