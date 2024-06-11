@@ -62,9 +62,30 @@ router.get("/post/:id", async (req, res) => {
       ],
     });
 
+    const userData = await User.findByPk(postData.user.id, {
+      include: [
+        {
+          model: User,
+          as: "followers",
+          attributes: ["id", "username"],
+        },
+        {
+          model: User,
+          as: "following",
+          attributes: ["id", "username"],
+        },
+      ],
+    });
+
+    const user = userData.get({ plain: true });
+    user.isFollowing = user.followers.some(
+      (follow) => follow.id === req.session.user_id
+    );
+
     const post = postData.get({ plain: true });
     res.render("post", {
       ...post,
+      ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

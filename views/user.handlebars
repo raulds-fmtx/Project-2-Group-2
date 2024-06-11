@@ -1,9 +1,10 @@
-<h2>{{username}}</h2>
-<button id="follow-btn" data-id="{{id}}" class="{{#if isFollowing}}unfollow{{else}}follow{{/if}}">
-  {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
-</button>
+<h2>
+  {{username}}
+  <button data-id="{{id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+    {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+  </button>
+</h2>
 
-<h3>Posts by {{username}}</h3>
 <ul>
   {{#each posts}}
     <li>
@@ -14,7 +15,7 @@
       <p>{{this.content}}</p>
       <button class="like-btn" data-id="{{this.id}}">Like</button>
       <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
-      <p>Posted on {{this.createdAt}}</p>
+      <p>Posted on {{format_date this.createdAt}}</p>
     </li>
   {{/each}}
 </ul>

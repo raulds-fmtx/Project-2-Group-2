@@ -1,7 +1,12 @@
 <article class="post">
   <header>
     <h1>{{title}}</h1>
-    <p><a href="/user/{{user_id}}">{{user.username}}</a></p>
+    <p>
+      <a href="/user/{{user_id}}">{{user.username}}</a> 
+      <button data-id="{{id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+        {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+      </button>
+    </p>
   </header>
   <section>
     {{#if image_url}}
@@ -10,7 +15,7 @@
     <p>{{content}}</p>
     <button class="like-btn" data-id="{{id}}">Like</button>
     <span id="like-count-{{id}}">{{numLikes}} likes</span>
-    <p>{{createdAt}}</p>
+    <p>Posted on {{format_date createdAt}}</p>
   </section>
 </article>
 
@@ -41,3 +46,4 @@
 
 <script src="/js/comment.js"></script>
 <script src="/js/likePost.js"></script>
+<script src="/js/follow.js"></script>
