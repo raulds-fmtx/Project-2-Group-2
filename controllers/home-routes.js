@@ -11,9 +11,9 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-
-    const posts = postData.map((post) => post.get({ plain: true }));
     
+    const posts = postData.map((post) => post.get({ plain: true }));
+
     res.render("homepage", {
       posts,
       logged_in: req.session.logged_in,
@@ -37,9 +37,27 @@ router.get("/dashboard", async (req, res) => {
       ],
     });
 
+    const userData = await User.findByPk(req.session.user_id, {
+      include: [
+        {
+          model: User,
+          as: "followers",
+          attributes: ["id", "username"],
+        },
+        {
+          model: User,
+          as: "following",
+          attributes: ["id", "username"],
+        },
+      ],
+    });
+
     const posts = postData.map((post) => post.get({ plain: true }));
+    const user = userData.get({ plain: true });
+
     res.render("dashboard", {
       posts,
+      ...user,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

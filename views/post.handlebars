@@ -3,7 +3,7 @@
     <h1>{{title}}</h1>
     <p>
       <a href="/user/{{user_id}}">{{user.username}}</a> 
-      <button data-id="{{id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+      <button data-id="{{user_id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
         {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
       </button>
     </p>

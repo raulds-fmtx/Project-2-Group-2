@@ -26,6 +26,20 @@
   <p>No posts yet</p>
 {{/if}}
 
+<h3>Followers</h3>
+<ul>
+  {{#each followers}}
+    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
+  {{/each}}
+</ul>
+
+<h3>Following</h3>
+<ul>
+  {{#each following}}
+    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
+  {{/each}}
+</ul>
+
 <script src="/js/addPost.js"></script>
 <script src="/js/editPost.js"></script>
 <script src="/js/deletePost.js"></script>
