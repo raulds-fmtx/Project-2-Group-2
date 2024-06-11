@@ -23,14 +23,22 @@
 <h3>Followers</h3>
 <ul>
   {{#each followers}}
-    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
+    {{#if (equals this.id ../current_user_id)}}
+      <p><a href="/dashboard">{{this.username}}</a></p>
+    {{else}}
+      <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+    {{/if}}
   {{/each}}
 </ul>
 
 <h3>Following</h3>
 <ul>
   {{#each following}}
-    <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
+    {{#if (equals this.id ../current_user_id)}}
+      <p><a href="/dashboard">{{this.username}}</a></p>
+    {{else}}
+      <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+    {{/if}}
   {{/each}}
 </ul>
 

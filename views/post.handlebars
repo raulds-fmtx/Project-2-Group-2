@@ -2,10 +2,14 @@
   <header>
     <h1>{{title}}</h1>
     <p>
-      <a href="/user/{{user_id}}">{{user.username}}</a> 
-      <button data-id="{{user_id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
-        {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
-      </button>
+      {{#if (equals user_id current_user_id)}}
+        <p><a href="/dashboard">{{user.username}}</a></p>
+      {{else}}
+        <p><a href="/user/{{user_id}}">{{user.username}}</a></p>
+        <button data-id="{{user_id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+          {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+        </button>
+      {{/if}}
     </p>
   </header>
   <section>

@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
     res.render("homepage", {
       posts,
       logged_in: req.session.logged_in,
+      current_user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -59,6 +60,7 @@ router.get("/dashboard", async (req, res) => {
       posts,
       ...user,
       logged_in: req.session.logged_in,
+      current_user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -105,6 +107,7 @@ router.get("/post/:id", async (req, res) => {
       ...post,
       ...user,
       logged_in: req.session.logged_in,
+      current_user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
@@ -144,6 +147,7 @@ router.get("/user/:id", async (req, res) => {
     res.render("user", {
       ...user,
       logged_in: req.session.logged_in,
+      current_user_id: req.session.user_id,
     });
   } catch (err) {
     res.status(500).json(err);
