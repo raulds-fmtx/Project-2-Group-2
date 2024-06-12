@@ -1,7 +1,31 @@
-<form id="signup-form">
+{{!-- <form id="signup-form">
   <input type="text" name="username" placeholder="Username" required>
   <input type="password" name="password" placeholder="Password" required>
   <button type="submit">Sign Up</button>
 </form>
-<a href="/login">Already have an account? Log in</a>
-<script src="/js/signup.js"></script>
+--}}
+</head>
+
+<body>
+  <section class="hero is-primary is-fullheight is-fullwidth">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <p class="title">Sign Up </p>
+        <!--form start-->
+        <div class="field" id="signup-form">
+          <!--form start-->
+          <input class="input custom-input-width" type="text" placeholder="username" />
+        </div>
+        <div class="field">
+          <input class="input custom-input-width" type="password" placeholder="Password" />
+        </div>
+        <!--form end-->
+        <a href="/login">Already have an account? Log in</a>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/signup.js"></script>
+</body>
+
+</html>
