@@ -73,7 +73,7 @@ io.on(`connection`, socket =>{
 
          // too all other users
 
-         socket.broadcast.to(user.room).emit(`message`, buildMsg).emit(`message`, buildMsg(ADMIN, `${user.name} has joined the room`))
+         socket.broadcast.to(user.room).emit(`message`, buildMsg(ADMIN, `${user.name} has joined the room`))
 
          // update users list for room
 
@@ -144,10 +144,7 @@ function buildMsg( name, text){
 
 function activateUser(id,name,room){
     const user = {id,name,room}
-    UsersState.setUsers({
-        ...UsersState.users.filter(user => user.id !== id),
-        user 
-    })
+        UsersState.users.push(user)
     return user
 }
 
@@ -162,9 +159,10 @@ function getUser (id){
 }
 
 function getUsersInRoom(room){
+    console.log("testing", UsersState.users)
     return UsersState.users.filter(user => user.room === room)
 }
 
 function getAllActiveRooms(){
-    return Array.from(new Set(UsersState.user.map( user => user.room)))
+    return Array.from(new Set(UsersState.users.map( user => user.room)))
 }
