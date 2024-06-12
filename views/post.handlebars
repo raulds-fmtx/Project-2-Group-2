@@ -1,10 +1,25 @@
 <article class="post">
   <header>
     <h1>{{title}}</h1>
-    <p>By {{user.username}} on {{createdAt}}</p>
+    <p>
+      {{#if (equals user_id current_user_id)}}
+        <p><a href="/dashboard">{{user.username}}</a></p>
+      {{else}}
+        <p><a href="/user/{{user_id}}">{{user.username}}</a></p>
+        <button data-id="{{user_id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+          {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+        </button>
+      {{/if}}
+    </p>
   </header>
   <section>
+    {{#if image_url}}
+        <img src="{{image_url}}" height="auto" width="400" alt="Post Image">
+    {{/if}}
     <p>{{content}}</p>
+    <button class="like-btn" data-id="{{id}}">Like</button>
+    <span id="like-count-{{id}}">{{numLikes}} likes</span>
+    <p>Posted on {{format_date createdAt}}</p>
   </section>
 </article>
 
@@ -34,3 +49,5 @@
 {{/if}}
 
 <script src="/js/comment.js"></script>
+<script src="/js/likePost.js"></script>
+<script src="/js/follow.js"></script>
