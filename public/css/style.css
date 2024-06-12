@@ -90,6 +90,10 @@ header {
     background-color: #84a59d;
   } */
   
+  .custom-input-width {
+    width: 50%;
+  }
+  
   /* Input/textarea styles */
   
   #titleInput,
