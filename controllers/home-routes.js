@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Post, Comment, User, Follow } = require("../models");
+const { Post, Comment, User } = require("../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -11,14 +11,72 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    
-    const posts = postData.map((post) => post.get({ plain: true }));
 
-    res.render("homepage", {
-      posts,
-      logged_in: req.session.logged_in,
-      current_user_id: req.session.user_id,
-    });
+    if (req.session.logged_in) {
+      const userPostData = await Post.findAll({
+        where: {
+          user_id: req.session.user_id,
+        },
+        include: [
+          {
+            model: Comment,
+            include: [User],
+          },
+        ],
+      });
+
+      const user = await User.findByPk(req.session.user_id, {
+        include: [
+          {
+            model: User,
+            as: "followers",
+            attributes: ["id", "username"],
+          },
+          {
+            model: User,
+            as: "following",
+            attributes: ["id", "username"],
+          },
+        ],
+      });
+
+      const posts = postData.map((post) => post.get({ plain: true }));
+      const userPosts = userPostData.map((post) => post.get({ plain: true }));
+      let numLikes = 0;
+      for (let i = 0; i < userPosts.length; ++i) {
+        numLikes += userPosts[i].numLikes;
+      }
+      const numFollowers = user.followers.length;
+      const numFollowing = user.following.length;
+      let following = user.following.map((userFollowing) => userFollowing.get({ plain: true }));
+      let follower = user.following.map((userFollower) => userFollower.get({ plain: true }));
+      const mutuals = following.filter(userFollowing => 
+        follower.some(userFollower => 
+          userFollowing.id === userFollower.id
+      ));
+
+      res.render("homepage", {
+        posts,
+        userPosts,
+        numFollowers,
+        numFollowing,
+        numLikes,
+        mutuals,
+        logged_in: req.session.logged_in,
+        current_user_id: user.user_id,
+        current_username: user.username,
+      });
+    } else {
+      const posts = postData.map((post) => post.get({ plain: true }));
+
+      console.log(req.session);
+      res.render("homepage", {
+        posts,
+        logged_in: req.session.logged_in,
+        current_user_id: req.session.user_id,
+      });
+    }
+
   } catch (err) {
     res.status(500).json(err);
   }
