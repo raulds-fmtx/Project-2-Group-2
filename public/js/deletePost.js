@@ -4,6 +4,7 @@ document.querySelectorAll(".delete-post-btn").forEach((button) => {
 
     const response = await fetch(`/api/posts/${id}`, {
       method: "DELETE",
+      headers: { "Content-Type": "application/json" },
     });
 
     if (response.ok) {

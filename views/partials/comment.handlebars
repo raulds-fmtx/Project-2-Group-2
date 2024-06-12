@@ -1,4 +1,4 @@
 <li class="comment">
   <p>{{comment_text}}</p>
-  <p>By {{user.username}} on {{createdAt}}</p>
+  <p>By <a href="/user/{{user.id}}">{{user.username}}</a> on {{format_date createdAt}}</p>
 </li>

@@ -1,18 +1,19 @@
-document.getElementById("add-post-btn").addEventListener("click", async () => {
-  const title = prompt("Enter post title");
-  const content = prompt("Enter post content");
+document.querySelector("#new-post-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-  if (title && content) {
-    const response = await fetch("/api/posts", {
-      method: "POST",
-      body: JSON.stringify({ title, content }),
-      headers: { "Content-Type": "application/json" },
-    });
+  const formData = new FormData();
+  formData.append("title", document.querySelector("#post-title").value.trim());
+  formData.append("content", document.querySelector("#post-content").value.trim());
+  formData.append("image", document.querySelector("#post-image").files[0]);
 
-    if (response.ok) {
-      document.location.reload();
-    } else {
-      alert("Failed to add post.");
-    }
+  const response = await fetch("/api/posts", {
+    method: "POST",
+    body: formData,
+  });
+
+  if (response.ok) {
+    document.location.reload();
+  } else {
+    alert("Failed to create post");
   }
 });
