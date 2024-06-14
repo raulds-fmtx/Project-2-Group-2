@@ -4,12 +4,25 @@ header {
   font-family: "Jomolhari", serif;
 }
 
+.heading{
+  font-size: large;
+}
 /*body {
     background-color: #a28089;
   }*/
-
+.custom-col-width{
+  width: 100%;
+}
 .custom-form-width {
   width: 100%;
+}
+
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  width: 300px;
 }
 
 .is-scrollable {
@@ -57,10 +70,11 @@ header {
 
 h1 {
   font-family: "Jomolhari", serif;
-  background-color: teal;
-  color: #ffb3c6;
-  padding: 16px;
+  /* background-color: teal;
+  color: #ffb3c6; */
+  padding: 10px;
   margin-bottom: 5px;
+  font-size: 26px;
 }
 
 #blogName {

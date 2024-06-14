@@ -1,9 +1,9 @@
 <div class="columns">
 
   {{!-- user col --}}
-  <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center">
+  <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-full-width">
 
-    {{!-- update prof pic --}}
+    {{!-- update prof pic change --}}
     <div class="file is-primary has-name">
       <label class="file-label">
         <input class="file-input" type="file" name="resume" />
@@ -12,7 +12,7 @@
             <i class="fas fa-upload"></i>
           </span>
         </span>
-        <span class="file-name"> Update user pic </span>
+        <span class="file-name">Update profile pic</span>
       </label>
     </div>
 
@@ -23,27 +23,50 @@
     </figure>
 
     {{!-- username --}}
-    <p>{{username}}</p>
+    <h1 class="is-primary">{{username}}</h1>
 
-    {{!-- followers and following --}}
-    <nav class="level">
+    {{!-- follow user button --}}
+    <button class="button is-primary" id="followBtn">follow '{{username}}'</button>
+
+    {{!-- followers and following label --}}
+    <nav class="level py-2 ">
       <div class="level-item has-text-centered">
-        <div>
+        <div class="px-4">
           <p class="heading">Followers</p>
           <p class="title">{{numFollowers}}</p>
         </div>
       </div>
       <div class="level-item has-text-centered">
-        <div>
+        <div class="px-4">
           <p class="heading">Following</p>
           <p class="title">{{numFollowing}}</p>
         </div>
       </div>
     </nav>
 
-    <div class="columns is-full-width">
+    {{!-- followers and following --}}
+    <div class="columns custom-col-width">
+
+
       {{!-- followers --}}
-      <div class="column is-one-half is-flex is-flex-direction-column is-align-items-center">
+      <div class="column is-one-half is-scrollable">
+
+        {{!-- follower card --}}
+        <div class="card followerCard">
+          <div class="card-content">
+            <div class="media is-flex is-justify-content-baseline">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">John Smith</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <ul>
           {{#each followers}}
           <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
@@ -52,7 +75,7 @@
       </div>
 
       {{!-- following --}}
-      <div class="column is-one-half is-flex is-flex-direction-column is-align-items-center">
+      <div class="column is-one-half is-scrollable">
         <ul>
           {{#each following}}
           <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
@@ -63,8 +86,7 @@
   </div>
 
   {{!-- col for posts --}}
-  <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center">
-
+  <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-scrollable">
     {{!-- posts --}}
     {{#if posts.length}}
     {{#each posts}}
@@ -113,33 +135,13 @@
       </div>
 
       {{!-- button --}}
-      <input class="button is-primary mt-3 custom-form-width" type="submit" value="preview post" />
+      <input class="button is-primary mt-3 custom-form-width" type="submit" value="Add post" />
     </form>
-
-    
-    {{!-- form data --}}
-    {{!-- <form id="new-post-form" enctype="multipart/form-data">
-      <input type="text" name="title" id="post-title" placeholder="Title" required>
-      <input type="file" name="image" id="post-image">
-      <textarea name="content" id="post-content" placeholder="Content" required></textarea>
-      <button type="submit">Create Post</button>
-    </form> --}}
-
-    {{!-- section for preview --}}
-    <section class="section is-medium">
-      <p>preview post</p>
-    </section>
   </div>
 </div>
-
-
-
-
-
-
-
 
 <script src="/js/addPost.js"></script>
 <script src="/js/editPost.js"></script>
 <script src="/js/deletePost.js"></script>
 <script src="/js/likePost.js"></script>
+<script src="../public/js/follow.js"></script>

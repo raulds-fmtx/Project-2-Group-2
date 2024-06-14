@@ -2,6 +2,8 @@
   <nav class="navbar" role="navigation" aria-label="main navigation">
 
     <div class="navbar-menu">
+
+      {{!-- nav home btn --}}
       <div class="navbar-start">
         <span class="icon-text navbar-item">
           <a class="button is-primary is-outlined" href="/">
@@ -9,7 +11,20 @@
             <strong>Home</strong>
           </a>
         </span>
+
+        {{!-- nav searchbar --}}
+        <div class="navbar-item nav-search ui-widget">
+          <div class="field">
+            <div class="control">
+              <input class="input is-primary is-outlined search" type="text" placeholder="Search users">
+            </div>
+          </div>
+        </div>
       </div>
+
+
+
+      {{!-- nav login logout and dashboard --}}
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
@@ -30,4 +45,7 @@
       </div>
     </div>
   </nav>
+
 </header>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
