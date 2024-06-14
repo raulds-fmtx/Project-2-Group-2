@@ -111,58 +111,17 @@ router.get("/dashboard", async (req, res) => {
       ],
     });
 
+    let following = userData.following.map((userFollowing) => userFollowing.get({ plain: true }));
+    let followers = userData.followers.map((userFollower) => userFollower.get({ plain: true }));
     const posts = postData.map((post) => post.get({ plain: true }));
     const user = userData.get({ plain: true });
 
     res.render("dashboard", {
       posts,
-      ...user,
-      logged_in: req.session.logged_in,
-      current_user_id: req.session.user_id,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/post/:id", async (req, res) => {
-  try {
-    const postData = await Post.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ["username", "id"],
-        },
-        {
-          model: Comment,
-          include: [User],
-        },
-      ],
-    });
-
-    const userData = await User.findByPk(postData.user.id, {
-      include: [
-        {
-          model: User,
-          as: "followers",
-          attributes: ["id", "username"],
-        },
-        {
-          model: User,
-          as: "following",
-          attributes: ["id", "username"],
-        },
-      ],
-    });
-
-    const user = userData.get({ plain: true });
-    user.isFollowing = user.followers.some(
-      (follow) => follow.id === req.session.user_id
-    );
-
-    const post = postData.get({ plain: true });
-    res.render("post", {
-      ...post,
+      following,
+      followers,
+      numFollowers: followers.length,
+      numFollowing: following.length,
       ...user,
       logged_in: req.session.logged_in,
       current_user_id: req.session.user_id,
@@ -204,6 +163,8 @@ router.get("/user/:id", async (req, res) => {
 
     res.render("user", {
       ...user,
+      numFollowers: user.followers.length,
+      numFollowing: user.following.length,
       logged_in: req.session.logged_in,
       current_user_id: req.session.user_id,
     });

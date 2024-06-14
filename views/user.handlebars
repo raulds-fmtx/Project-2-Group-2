@@ -1,46 +1,125 @@
-<h2>
-  {{username}}
-  <button data-id="{{id}}" class="follow-btn {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
-    {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
-  </button>
-</h2>
+<div class="columns">
 
-<ul>
-  {{#each posts}}
-    <li>
-      <h4>{{this.title}}</h4>
-      {{#if this.image_url}}
-        <img src="{{this.image_url}}" height="auto" width="400" alt="Post Image">
-      {{/if}}
-      <p>{{this.content}}</p>
-      <button class="like-btn" data-id="{{this.id}}">Like</button>
-      <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
-      <p>Posted on {{format_date this.createdAt}}</p>
-    </li>
-  {{/each}}
-</ul>
+  {{!-- user col --}}
+  <div class="column is-half is-flex is-flex-direction-column is-align-items-center is-full-width">
 
-<h3>Followers</h3>
-<ul>
-  {{#each followers}}
-    {{#if (equals this.id ../current_user_id)}}
-      <p><a href="/dashboard">{{this.username}}</a></p>
+    {{!-- user pic --}}
+    <figure class="image is-128x128">
+      <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> {{!-- update to user picture --}}
+    </figure>
+
+    {{!-- username --}}
+    <h1 class="is-primary">{{username}}</h1>
+
+    {{!-- follow user button --}}
+    <button data-id="{{id}}" class="follow-btn button is-primary {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+      {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+    </button>
+
+    {{!-- followers and following label --}}
+    <nav class="level py-2 ">
+      <div class="level-item has-text-centered">
+        <div class="px-4">
+          <p class="heading">Followers</p>
+          <p class="title">{{numFollowers}}</p>
+        </div>
+      </div>
+      <div class="level-item has-text-centered">
+        <div class="px-4">
+          <p class="heading">Following</p>
+          <p class="title">{{numFollowing}}</p>
+        </div>
+      </div>
+    </nav>
+
+    {{!-- followers and following --}}
+    <div class="columns custom-col-width">
+
+
+      {{!-- followers --}}
+      <div class="column is-one-half is-scrollable">
+
+        {{!-- follower card --}}
+        {{#each followers}}
+          <div class="card followerCard">
+            <div class="card-content">
+              <div class="media is-flex is-justify-content-baseline">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+
+      {{!-- following --}}
+      <div class="column is-one-half is-scrollable">
+        {{#each following}}
+          <div class="card followerCard">
+            <div class="card-content">
+              <div class="media is-flex is-justify-content-baseline">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  {{!-- col for posts --}}
+  <div class="column is-half is-flex is-flex-direction-column is-align-items-center is-scrollable">
+    {{#if posts.length}}
+      {{#each posts}}
+        <!--placeholder post-->
+        <div class="card">
+          {{#if this.image_url}}
+            <div class="card-image">
+              <figure class="image">
+                <img src="{{this.image_url}}" width="1280" alt="Post image" />
+              </figure>
+            </div>
+          {{/if}}
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/assets/images/placeholders/96x96.png" class="is-rounded" alt="Placeholder image" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{../username}}</p>
+              </div>
+            </div>
+
+            <div class="content">
+              <p class="title is-4">{{this.title}}</p>
+              <p>{{this.content}}</p>
+              <button class="like-btn button is-primary" data-id="{{this.id}}">Like</button>
+              <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
+              <br />
+              <p>Posted on {{format_date this.createdAt}}</p>
+            </div>
+          </div>
+        </div>
+      {{/each}}
     {{else}}
-      <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+      <p>No posts yet</p>
     {{/if}}
-  {{/each}}
-</ul>
-
-<h3>Following</h3>
-<ul>
-  {{#each following}}
-    {{#if (equals this.id ../current_user_id)}}
-      <p><a href="/dashboard">{{this.username}}</a></p>
-    {{else}}
-      <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
-    {{/if}}
-  {{/each}}
-</ul>
+  </div>
 
 <script src="/js/follow.js"></script>
 <script src="/js/likePost.js"></script>

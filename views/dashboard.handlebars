@@ -3,19 +3,6 @@
   {{!-- user col --}}
   <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-full-width">
 
-    {{!-- update prof pic change --}}
-    <div class="file is-primary has-name">
-      <label class="file-label">
-        <input class="file-input" type="file" name="resume" />
-        <span class="file-cta">
-          <span class="file-icon">
-            <i class="fas fa-upload"></i>
-          </span>
-        </span>
-        <span class="file-name">Update profile pic</span>
-      </label>
-    </div>
-
     {{!-- user pic --}}
     <figure class="image is-128x128">
       <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> {{!-- update to user
@@ -26,7 +13,7 @@
     <h1 class="is-primary">{{username}}</h1>
 
     {{!-- follow user button --}}
-    <button class="button is-primary" id="followBtn">follow '{{username}}'</button>
+    {{!-- <button class="button is-primary" id="followBtn">follow '{{username}}'</button> --}}
 
     {{!-- followers and following label --}}
     <nav class="level py-2 ">
@@ -52,61 +39,88 @@
       <div class="column is-one-half is-scrollable">
 
         {{!-- follower card --}}
-        <div class="card followerCard">
-          <div class="card-content">
-            <div class="media is-flex is-justify-content-baseline">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-4">John Smith</p>
+        {{#each followers}}
+          <div class="card followerCard">
+            <div class="card-content">
+              <div class="media is-flex is-justify-content-baseline">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-        <ul>
-          {{#each followers}}
-          <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
-          {{/each}}
-        </ul>
+        {{/each}}
       </div>
 
       {{!-- following --}}
       <div class="column is-one-half is-scrollable">
-        <ul>
-          {{#each following}}
-          <li><a href="/user/{{this.id}}">{{this.username}}</a></li>
-          {{/each}}
-        </ul>
+        {{#each following}}
+          <div class="card followerCard">
+            <div class="card-content">
+              <div class="media is-flex is-justify-content-baseline">
+                <div class="media-left">
+                  <figure class="image is-48x48">
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                  </figure>
+                </div>
+                <div class="media-content">
+                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
       </div>
     </div>
   </div>
 
   {{!-- col for posts --}}
   <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-scrollable">
-    {{!-- posts --}}
     {{#if posts.length}}
-    {{#each posts}}
-    <div class="post">
-      <h2>{{this.title}}</h2>
-      {{#if this.image_url}}
-      <img src="{{this.image_url}}" height="auto" width="400" alt="Post Image">
-      {{/if}}
-      <button class="like-btn" data-id="{{this.id}}">Like</button>
-      <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
-      <p>Posted on {{format_date this.createdAt}}</p>
-      <a href="/post/{{this.id}}">Read More</a>
-      <div>
-        <button class="edit-post-btn" data-id="{{this.id}}">Edit</button>
-        <button class="delete-post-btn" data-id="{{this.id}}">Delete</button>
-      </div>
-    </div>
-    {{/each}}
+      {{#each posts}}
+        <!--placeholder post-->
+        <div class="card">
+          {{#if this.image_url}}
+            <div class="card-image">
+              <figure class="image">
+                <img src="{{this.image_url}}" width="1280" alt="Post image" />
+              </figure>
+            </div>
+          {{/if}}
+          <div class="card-content">
+            <div class="media">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src="https://bulma.io/assets/images/placeholders/96x96.png" class="is-rounded" alt="Placeholder image" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p class="title is-4">{{../username}}</p>
+              </div>
+            </div>
+
+            <div class="content">
+              <p class="title is-4">{{this.title}}</p>
+              <p>{{this.content}}</p>
+              <button class="like-btn button is-primary" data-id="{{this.id}}">Like</button>
+              <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
+              <br />
+              <p>Posted on {{format_date this.createdAt}}</p>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="edit-post-btn button" data-id="{{this.id}}">Edit</button>
+            <button class="delete-post-btn button" data-id="{{this.id}}">Delete</button>
+          </div>
+        </div>
+      {{/each}}
     {{else}}
-    <p>No posts yet</p>
+      <p>No posts yet</p>
     {{/if}}
   </div>
 
@@ -115,27 +129,38 @@
 
     {{!-- form start --}}
     <form id="new-post-form" enctype="multipart/form-data">
+      {{!-- title --}}
+      <div class="field">
+        <label class="text-label">Title</label>
+        <div class="control custom-form-width">
+          <input class="text-input" type="text" name="title" id="post-title" placeholder="Title" required>
+        </div>
+      </div>
+      
       {{!-- file --}}
       <div id="file-js" class="file has-name is-primary">
         <label class="file-label">
-          <input class="file-input" type="file" name="resume" />
+          <input class="file-input" type="file" name="image" id="post-image">
           <span class="file-cta">
             <span class="file-icon">
               <i class="fas fa-upload"></i>
             </span>
-            <span class="file-label"> Choose a file… </span>
+            <span class="file-label">Choose an image...</span>
           </span>
-          <span class="file-name"> No file uploaded </span>
+          <span class="file-name">No file uploaded </span>
         </label>
       </div>
 
       {{!-- caption --}}
-      <div class="control custom-form-width">
-        <textarea class="textarea is-hovered" placeholder="Caption"></textarea>
+      <div class="field">
+        <label class="text-label">Caption</label>
+        <div class="control custom-form-width">
+          <textarea class="textarea is-hovered" name="content" id="post-content" placeholder="Caption" required></textarea>
+        </div>
       </div>
 
       {{!-- button --}}
-      <input class="button is-primary mt-3 custom-form-width" type="submit" value="Add post" />
+      <button class="button is-primary mt-3 custom-form-width" type="submit">Add Post</button>
     </form>
   </div>
 </div>
@@ -144,4 +169,3 @@
 <script src="/js/editPost.js"></script>
 <script src="/js/deletePost.js"></script>
 <script src="/js/likePost.js"></script>
-<script src="../public/js/follow.js"></script>
