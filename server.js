@@ -3,12 +3,16 @@ const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const http = require("http");
+const socketIo = require("socket.io");
 
 const routes = require("./controllers");
 const sequelize = require("./config/connection");
 const helpers = require("./utils/helpers");
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 const PORT = process.env.PORT || 3001;
 
 const sess = {
@@ -35,9 +39,27 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(routes);
 
 sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, () =>
+  server.listen(PORT, () =>
     console.log(
       `\nServer running on port ${PORT}. Visit http://localhost:${PORT} and create an account!`
     )
   );
+});
+
+// Socket.io logic
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("join room", (room) => {
+    socket.join(room);
+    console.log(`User joined room: ${room}`);
+  });
+
+  socket.on("chat message", (data) => {
+    io.to(data.room).emit("chat message", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
 });

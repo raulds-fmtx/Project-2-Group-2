@@ -1,0 +1,11 @@
+<h1>Private Chat with User <a href="/user/{{other_user_id}}">{{other_username}}</a></h1>
+<ul id="messages"></ul>
+<form id="chat-form">
+    <input id="m" autocomplete="off"><button>Send</button>
+</form>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const currentUserId = {{current_user_id}};
+    const otherUserId = {{other_user_id}};
+</script>
+<script src="/js/chat.js"></script>
