@@ -16,10 +16,6 @@ User.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    userpic: {
-      type: DataTypes.STRING,
-      allowNull: true, // Allow null if userpic is optional
-    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
