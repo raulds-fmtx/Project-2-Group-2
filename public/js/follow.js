@@ -20,20 +20,20 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// function for follow button color and text switch
-// DOES NOT WORK
-const followBtn = document.getElementById('followBtn');
+// // function for follow button color and text switch
+// // DOES NOT WORK
+// const followBtn = document.getElementById('followBtn');
 
-// Add a click event listener
-followBtn.addEventListener('click', function() {
-  // Add the class 'is-outlined'
-  followBtn.classList.add('is-outlined');
+// // Add a click event listener
+// followBtn.addEventListener('click', function() {
+//   // Add the class 'is-outlined'
+//   followBtn.classList.add('is-outlined');
 
-  // Toggle the button text content
-  if (followBtn.classList.contains('is-outlined')) {
-    followBtn.textContent = `follow '${username}'`;
-  } else {
-    followBtn.textContent = `following '${username}'`;
-  }
-});
+//   // Toggle the button text content
+//   if (followBtn.classList.contains('is-outlined')) {
+//     followBtn.textContent = `follow '${username}'`;
+//   } else {
+//     followBtn.textContent = `following '${username}'`;
+//   }
+// });
 

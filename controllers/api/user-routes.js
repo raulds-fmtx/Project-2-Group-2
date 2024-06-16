@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User } = require("../../models");
+const { Op } = require("sequelize");
 
 // Signup route
 router.post("/signup", async (req, res) => {
@@ -56,5 +57,33 @@ router.post("/logout", (req, res) => {
     res.status(404).end();
   }
 });
+
+// Route to fetch users for autocomplete
+router.get('/search-users', async (req, res) => {
+  try {
+      const term = req.query.term;
+      const users = await User.findAll({
+          where: {
+              username: {
+                  [Op.like]: `%${term}%`  // Adjust based on your search criteria
+              }
+          },
+          attributes: ['id', 'username'] // Fetch only necessary attributes
+      });
+
+      // Map users to format expected by autocomplete widget
+      const formattedUsers = users.map(user => ({
+          label: user.username,  // This is crucial for autocomplete to display usernames
+          value: user.id,        // Optionally include value if needed
+          user: user             // Optionally include full user object if needed
+      }));
+
+      res.json(formattedUsers);  // Send formatted data as JSON response
+  } catch (err) {
+      console.error('Error fetching users:', err);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;

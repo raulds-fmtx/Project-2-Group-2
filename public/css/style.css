@@ -4,15 +4,52 @@ header {
   font-family: "Jomolhari", serif;
 }
 
-.heading{
+.heading {
   font-size: large;
 }
+
 /*body {
     background-color: #a28089;
   }*/
-.custom-col-width{
+
+/* for the autocomplete */
+#project-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+#project-icon {
+  float: left;
+  height: 32px;
+  width: 32px;
+}
+#project-description {
+  margin: 0;
+  padding: 0;
+}
+
+
+#user-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+#user-icon {
+  float: left;
+  height: 32px;
+  width: 32px;
+}
+
+#user-description {
+  margin: 0;
+  padding: 0;
+}
+
+.custom-col-width {
   width: 100%;
 }
+
 .custom-form-width {
   width: 100%;
 }
@@ -91,6 +128,47 @@ h1 {
   margin-top: 34px;
 }
 
+/* Set the height of the autocomplete menu */
+.ui-menu {
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto; /* Add a vertical scrollbar if the content exceeds the height */
+}
+
+/* Ensure a consistent height for each item in the autocomplete list */
+.ui-menu .ui-menu-item-wrapper {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  height: 80px; /* Adjust as needed to fit your card design */
+  box-sizing: border-box;
+}
+
+/* Optional: Style the scrollbar */
+.ui-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ui-menu::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.ui-menu::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Style the card */
+.card {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.media-right {
+  margin-left: auto;
+}
+
+
 .user-name {
   background-color: #84a59d;
 }
@@ -105,6 +183,9 @@ h1 {
   background-color: #00a0a0;
 }
 
+#user-search{
+  width: 400px;
+}
 /* #logout {
     background-color: #84a59d;
   } */
