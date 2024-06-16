@@ -5,7 +5,13 @@
 
     {{!-- user pic --}}
     <figure class="image is-128x128">
-      <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> {{!-- update to user picture --}}
+      <img src=
+      {{#if profile_pic}}
+        "{{profile_pic}}"
+      {{else}}
+        "https://bulma.io/assets/images/placeholders/128x128.png"
+      {{/if}}
+      class="is-rounded" alt="Placeholder image" />
     </figure>
 
     {{!-- username --}}
@@ -46,11 +52,21 @@
               <div class="media is-flex is-justify-content-baseline">
                 <div class="media-left">
                   <figure class="image is-48x48">
-                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                    <img src=
+                    {{#if this.profile_pic}}
+                      "{{this.profile_pic}}"
+                    {{else}}
+                      "https://bulma.io/assets/images/placeholders/48x48.png"
+                    {{/if}}
+                    class="is-rounded" alt="Placeholder image" />
                   </figure>
                 </div>
                 <div class="media-content">
-                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                  {{#if (equals this.id ../current_user_id)}}
+                    <p><a href="/dashboard">{{this.username}}</a></p>
+                  {{else}}
+                    <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                  {{/if}}
                 </div>
               </div>
             </div>
@@ -66,11 +82,21 @@
               <div class="media is-flex is-justify-content-baseline">
                 <div class="media-left">
                   <figure class="image is-48x48">
-                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                    <img src=
+                    {{#if this.profile_pic}}
+                      "{{this.profile_pic}}"
+                    {{else}}
+                      "https://bulma.io/assets/images/placeholders/48x48.png"
+                    {{/if}}
+                    class="is-rounded" alt="Placeholder image" />
                   </figure>
                 </div>
                 <div class="media-content">
-                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                  {{#if (equals this.id ../current_user_id)}}
+                    <p><a href="/dashboard">{{this.username}}</a></p>
+                  {{else}}
+                    <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
+                  {{/if}}
                 </div>
               </div>
             </div>
@@ -97,7 +123,13 @@
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img src="https://bulma.io/assets/images/placeholders/96x96.png" class="is-rounded" alt="Placeholder image" />
+                  <img src=
+                  {{#if this.user.profile_pic}}
+                    "{{this.user.profile_pic}}"
+                  {{else}}
+                    "https://bulma.io/assets/images/placeholders/48x48.png"
+                  {{/if}}
+                  class="is-rounded" alt="Placeholder image" />
                 </figure>
               </div>
               <div class="media-content">

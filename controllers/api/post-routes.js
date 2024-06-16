@@ -1,19 +1,8 @@
 const router = require("express").Router();
 const { Post, Like } = require("../../models");
 const withAuth = require("../../utils/auth");
-const multer = require("multer");
 const deleteFile = require("../../utils/file");
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, `${Date.now()}-${file.originalname}`);
-  }
-});
-
-const upload = multer({ storage: storage});
+const upload = require('../../middlewares/upload'); // Import the upload middleware
 
 // Create new post
 router.post("/", withAuth, upload.single("image"), async (req, res) => {

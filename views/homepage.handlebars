@@ -6,7 +6,13 @@
 
       <!-- User prof img -->
       <figure class="image is-128x128">
-        <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+        <img src=
+        {{#if userProfilePic}}
+          "{{userProfilePic}}"
+        {{else}}
+          "https://bulma.io/assets/images/placeholders/128x128.png"
+        {{/if}}
+        class="is-rounded" alt="Placeholder image" />
       </figure>
 
       <!--user data-->
@@ -70,7 +76,13 @@
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img src="https://bulma.io/assets/images/placeholders/96x96.png" class="is-rounded" alt="Placeholder image" />
+                  <img src=
+                  {{#if this.user.profile_pic}}
+                    "{{this.user.profile_pic}}"
+                  {{else}}
+                    "https://bulma.io/assets/images/placeholders/48x48.png"
+                  {{/if}}
+                  class="is-rounded" alt="Placeholder image" />
                 </figure>
               </div>
               <div class="media-content">
@@ -127,4 +139,3 @@
 </div>
 
 <script src="/js/likePost.js"></script>
-<script src="/js/follow.js"></script>

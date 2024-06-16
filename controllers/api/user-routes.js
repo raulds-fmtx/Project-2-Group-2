@@ -1,10 +1,15 @@
 const router = require("express").Router();
 const { User } = require("../../models");
+const upload = require('../../middlewares/upload'); // Import the upload middleware
 
 // Signup route
-router.post("/signup", async (req, res) => {
+router.post("/signup", upload.single("image"), async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const userData = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      profile_pic: req.file ? `/uploads/${req.file.filename}` : null,
+    });
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
