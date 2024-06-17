@@ -16,7 +16,7 @@
         <div class="navbar-item nav-search ui-widget">
           <div class="field">
             <div class="control">
-              <input class="input is-primary is-outlined search" type="text" placeholder="Search users">
+              <input class="input is-primary is-outlined search" type="text" placeholder="Search users" id="user-search">
             </div>
           </div>
         </div>
@@ -30,15 +30,15 @@
           <div class="buttons">
             {{#if logged_in}}
 
-            <a class="button is-primary is-outlined" href="/dashboard">
-              <span class="icon"><i class="fas fa-user"></i></span>
-              <strong>Dashboard</strong>
-            </a>
+              <a class="button is-primary is-outlined" href="/dashboard">
+                <span class="icon"><i class="fas fa-user"></i></span>
+                <strong>Dashboard</strong>
+              </a>
 
-            <a class="button is-primary is-outlined" id="logout"><strong>Logout</strong></a>
+              <a class="button is-primary is-outlined" id="logout"><strong>Logout</strong></a>
             {{else}}
-            <a class="button is-primary is-outlined" href="/signup"><strong>Sign up</strong></a>
-            <a class="button is-primary is-outlined" href="/login">Log in</a>
+              <a class="button is-primary is-outlined" href="/signup"><strong>Sign up</strong></a>
+              <a class="button is-primary is-outlined" href="/login">Log in</a>
             {{/if}}
           </div>
         </div>
@@ -47,5 +47,3 @@
   </nav>
 
 </header>
-<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>

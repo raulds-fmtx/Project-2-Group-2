@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { User } = require("../../models");
 const upload = require('../../middlewares/upload'); // Import the upload middleware
+const { Op } = require('sequelize');
 
 // Signup route
 router.post("/signup", upload.single("image"), async (req, res) => {
@@ -59,6 +60,31 @@ router.post("/logout", (req, res) => {
     });
   } else {
     res.status(404).end();
+  }
+});
+
+router.get("/search", async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: {
+        username: {
+          [Op.like]: `%${req.query.term}%`,
+        },
+        id: {
+          [Op.ne]: req.session.user_id, // Exclude the logged-in user
+        },
+      },
+      attributes: ["id", "username"],
+    });
+    res.json(
+      users.map((user) => ({
+        label: user.username,
+        value: user.id,
+      }))
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
   }
 });
 
