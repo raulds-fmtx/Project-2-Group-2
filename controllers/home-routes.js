@@ -26,6 +26,7 @@ router.get("/", async (req, res) => {
       });
 
       const user = await User.findByPk(req.session.user_id, {
+        attributes: ["id", "username", "userpic"], // Include userpic attribute
         include: [
           {
             model: User,
@@ -48,12 +49,11 @@ router.get("/", async (req, res) => {
       }
       const numFollowers = user.followers.length;
       const numFollowing = user.following.length;
-      let following = user.following.map((userFollowing) => userFollowing.get({ plain: true }));
-      let follower = user.following.map((userFollower) => userFollower.get({ plain: true }));
-      const mutuals = following.filter(userFollowing => 
-        follower.some(userFollower => 
+      const mutuals = user.following.filter(userFollowing => 
+        user.followers.some(userFollower => 
           userFollowing.id === userFollower.id
-      ));
+        )
+      );
 
       res.render("homepage", {
         posts,
@@ -63,13 +63,13 @@ router.get("/", async (req, res) => {
         numLikes,
         mutuals,
         logged_in: req.session.logged_in,
-        current_user_id: user.user_id,
+        current_user_id: user.id,
         current_username: user.username,
+        userpic: user.userpic, // Pass userpic to the template
       });
     } else {
       const posts = postData.map((post) => post.get({ plain: true }));
 
-      console.log(req.session);
       res.render("homepage", {
         posts,
         logged_in: req.session.logged_in,
@@ -229,5 +229,30 @@ router.get("/signup", (req, res) => {
 
   res.render("signup");
 });
+
+router.get("/chat/:userId", async (req, res) => {
+  try {
+    if (!req.session.logged_in) {
+      res.redirect("/login");
+      return;
+    }
+
+    const otherUserId = req.params.userId;
+    const currentUserId = req.session.user_id;
+    const otherUser = await User.findByPk(otherUserId);
+    const currentUser = await User.findByPk(currentUserId);    
+
+    res.render("chat", {
+      logged_in: req.session.logged_in,
+      current_user_id: currentUserId,
+      other_user_id: otherUserId,
+      other_username: otherUser.username,
+      current_username: currentUser.username,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

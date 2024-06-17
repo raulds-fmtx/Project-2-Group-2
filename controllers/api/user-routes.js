@@ -1,16 +1,77 @@
 const router = require("express").Router();
-const { User } = require("../../models");
-const { Op } = require("sequelize");
+const { Post, Like, User } = require("../../models");
+const withAuth = require("../../utils/auth");
+const multer = require("multer");
+const deleteFile = require("../../utils/file");
 
-// Signup route
-router.post("/signup", async (req, res) => {
+// Multer configuration for file upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Route to update user profile picture
+router.post('/updateUserPic', upload.single('userpic'), async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    let userpicPath = null;
+    if (req.file) {
+      userpicPath = `/uploads/${req.file.filename}`;
+    }
+
+    // Assuming you have a user model and want to update the userpic for the current user
+    const updatedUser = await User.update(
+      { userpic: userpicPath },
+      { where: { id: req.session.user_id } }
+    );
+
+    res.status(200).json({ success: true, userpicUrl: userpicPath });
+  } catch (err) {
+    console.error('Error updating user profile picture:', err);
+    res.status(500).json({ success: false, error: 'Failed to update user profile picture.' });
+  }
+});
+
+// Signup route with file upload
+router.post("/signup", upload.single('userpic'), async (req, res) => {
+  try {
+    let userpicPath = null;
+    if (req.file) {
+      userpicPath = `/uploads/${req.file.filename}`;
+    }
+
+    const userData = await User.create({
+      username: req.body.username,
+      password: req.body.password,
+      userpic: userpicPath
+    });
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;
       res.status(200).json(userData);
     });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// Create new post
+router.post("/", withAuth, upload.single("image"), async (req, res) => {
+  try {
+    const newPost = await Post.create({
+      title: req.body.title,
+      content: req.body.content,
+      user_id: req.session.user_id,
+      image_url: req.file ? `/uploads/${req.file.filename}` : null,
+    });
+    res.status(200).json(newPost);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -57,33 +118,5 @@ router.post("/logout", (req, res) => {
     res.status(404).end();
   }
 });
-
-// Route to fetch users for autocomplete
-router.get('/search-users', async (req, res) => {
-  try {
-      const term = req.query.term;
-      const users = await User.findAll({
-          where: {
-              username: {
-                  [Op.like]: `%${term}%`  // Adjust based on your search criteria
-              }
-          },
-          attributes: ['id', 'username'] // Fetch only necessary attributes
-      });
-
-      // Map users to format expected by autocomplete widget
-      const formattedUsers = users.map(user => ({
-          label: user.username,  // This is crucial for autocomplete to display usernames
-          value: user.id,        // Optionally include value if needed
-          user: user             // Optionally include full user object if needed
-      }));
-
-      res.json(formattedUsers);  // Send formatted data as JSON response
-  } catch (err) {
-      console.error('Error fetching users:', err);
-      res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
 
 module.exports = router;

@@ -1,7 +1,7 @@
 <header>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-menu">
-      {{!-- nav home btn --}}
+      <!-- nav home btn -->
       <div class="navbar-start">
         <span class="icon-text navbar-item">
           <a class="button is-primary is-outlined" href="/">
@@ -10,7 +10,7 @@
           </a>
         </span>
 
-        {{!-- nav searchbar --}}
+        <!-- nav searchbar -->
         <div class="navbar-item nav-search ui-widget">
           <div class="field">
             <div class="control">
@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      {{!-- nav login logout and dashboard --}}
+      <!-- nav login logout and dashboard -->
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
@@ -29,7 +29,7 @@
               <span class="icon"><i class="fas fa-user"></i></span>
               <strong>Dashboard</strong>
             </a>
-            <a class="button is-primary is-outlined" id="logout"><strong>Logout</strong></a>
+            <button class="button is-primary is-outlined" id="logout"><strong>Logout</strong></button>
             {{else}}
             <a class="button is-primary is-outlined" href="/signup"><strong>Sign up</strong></a>
             <a class="button is-primary is-outlined" href="/login">Log in</a>
@@ -44,3 +44,4 @@
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
 <script src="/js/search.js"></script>
+<script src="/js/logout.js"></script> <!-- Include the logout script -->

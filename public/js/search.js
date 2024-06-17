@@ -40,7 +40,7 @@ $(function () {
                     </div>
                 </div>
             `;
-            $("#user-cards-container").html(userCard); // Replace or append to the container as needed
+            $("#user-cards-container").html(userCard);
 
             return false;
         }

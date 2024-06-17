@@ -8,9 +8,28 @@ header {
   font-size: large;
 }
 
-/*body {
-    background-color: #a28089;
-  }*/
+
+
+#dashUserPic {
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+  transition: box-shadow 1s ease, transform 1s ease;
+}
+
+#dashUserPic:hover {
+  box-shadow: none;
+  transform: scale(1.1);
+}
+
+#dashUserPic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
 
 /* for the autocomplete */
 #project-label {
@@ -18,11 +37,13 @@ header {
   font-weight: bold;
   margin-bottom: 1em;
 }
+
 #project-icon {
   float: left;
   height: 32px;
   width: 32px;
 }
+
 #project-description {
   margin: 0;
   padding: 0;
@@ -130,8 +151,10 @@ h1 {
 
 /* Set the height of the autocomplete menu */
 .ui-menu {
-  max-height: 300px; /* Adjust the height as needed */
-  overflow-y: auto; /* Add a vertical scrollbar if the content exceeds the height */
+  max-height: 300px;
+  /* Adjust the height as needed */
+  overflow-y: auto;
+  /* Add a vertical scrollbar if the content exceeds the height */
 }
 
 /* Ensure a consistent height for each item in the autocomplete list */
@@ -139,7 +162,8 @@ h1 {
   display: flex;
   align-items: center;
   padding: 5px 10px;
-  height: 80px; /* Adjust as needed to fit your card design */
+  height: 80px;
+  /* Adjust as needed to fit your card design */
   box-sizing: border-box;
 }
 
@@ -183,9 +207,10 @@ h1 {
   background-color: #00a0a0;
 }
 
-#user-search{
+#user-search {
   width: 400px;
 }
+
 /* #logout {
     background-color: #84a59d;
   } */

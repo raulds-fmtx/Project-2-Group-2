@@ -2,18 +2,43 @@
   <div class="hero-body">
     <div class="container has-text-centered">
       <p class="title">Sign Up</p>
-      <form id="signup-form">
+
+      <form id="signup-form" enctype="multipart/form-data" method="POST" action="/api/users/signup">
+
+        {{!-- user pic input --}}
         <div class="field">
-          <input class="input custom-input-width" type="text" name="username" placeholder="username"/>
+          <div id="file-js" class="file has-name is-light is-outline is-centered">
+            <label class="file-label">
+              <input class="file-input" type="file" name="userpic" />
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">Userpic</span>
+              </span>
+              <span class="file-name">choose file</span>
+            </label>
+          </div>
         </div>
+
+        {{!-- username --}}
         <div class="field">
-          <input class="input custom-input-width" type="password" name="password" placeholder="password"/>
+          <input class="input custom-input-width" type="text" name="username" placeholder="username" required />
         </div>
-        <button type="submit" class="button is-light">Signup</button>
+
+        {{!-- password --}}
+        <div class="field">
+          <input class="input custom-input-width" type="password" name="password" placeholder="password" required />
+        </div>
+
+        <button type="submit" class="button is-light">Sign Up</button>
       </form>
+      <!-- Link to login page for existing users -->
       <a href="/login">Already have an account? Login</a>
     </div>
   </div>
 </section>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/js/signup.js"></script>
+<script src="/utils/fileName.js"></script>
