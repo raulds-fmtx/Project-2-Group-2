@@ -80,3 +80,6 @@ DB_USER=your_postgresql_username
 DB_PASSWORD=your_postgresql_password
 SESSION_SECRET=your_session_secret
 
+TODO:
+Add styling and extra listeners to chat
+

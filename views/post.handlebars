@@ -1,0 +1,69 @@
+<div class="column is-full is-scrollable">
+    <div class="card">
+        {{#if this.image_url}}
+        <div class="card-image">
+            <figure class="image">
+            <img src="{{this.image_url}}" width="1280" alt="Post image" />
+            </figure>
+        </div>
+        {{/if}}
+        <div class="card-content">
+            <div class="media">
+                <div class="media-left">
+                <figure class="image is-48x48">
+                    <img src=
+                    {{#if this.user.profile_pic}}
+                    "{{this.user.profile_pic}}"
+                    {{else}}
+                    "https://bulma.io/assets/images/placeholders/48x48.png"
+                    {{/if}}
+                    class="is-rounded" alt="Placeholder image" />
+                </figure>
+                </div>
+                <div class="media-content">
+                {{#if (equals this.user_id ../current_user_id)}}
+                    <p class="title is-4"><a href="/dashboard">{{this.user.username}}</a></p>
+                {{else}}
+                    <p class="title is-4"><a href="/user/{{this.user_id}}">{{this.user.username}}</a></p>
+                {{/if}}
+                </div>
+            </div>
+
+            <div class="content">
+                <p class="title is-4">{{this.title}}</p>
+                <p>{{this.content}}</p>
+                <button class="like-btn button is-primary" data-id="{{this.id}}">Like</button>
+                <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
+                <br />
+                <p>Posted on {{format_date this.createdAt}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>Comments</h2>
+        {{#if comments.length}}
+            {{#each comments}}
+                {{> comment}}
+            {{/each}}
+        {{else}}
+            <p>No comments yet</p>
+        {{/if}}
+    </div>
+
+    {{#if logged_in}}
+    <div>
+        <h2>Add a Comment</h2>
+        <form id="comment-form">
+            <textarea name="comment_text" id="comment-text" placeholder="Enter your comment here..." required></textarea>
+            </br>
+            <button class="button is-primary" type="submit">Submit</button>
+        </form>
+    </div>
+    {{else}}
+    <p><a href="/login">Log in</a> to leave a comment.</p>
+    {{/if}}
+</div>
+
+<script src="/js/comment.js"></script>
+<script src="/js/likePost.js"></script>

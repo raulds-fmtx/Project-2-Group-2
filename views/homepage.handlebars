@@ -6,7 +6,13 @@
 
       <!-- User prof img -->
       <figure class="image is-128x128">
-        <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+        <img src=
+        {{#if userProfilePic}}
+          "{{userProfilePic}}"
+        {{else}}
+          "https://bulma.io/assets/images/placeholders/128x128.png"
+        {{/if}}
+        class="is-rounded" alt="Placeholder image" />
       </figure>
 
       <!--user data-->
@@ -54,7 +60,7 @@
   {{/if}}
 
   <!--center col for posts-->
-  <div class="column{{#if logged_in}} is-half {{else}} is_full {{/if}}is-scrollable">
+  <div class="column{{#if logged_in}} is-half {{else}} is-full {{/if}}is-scrollable">
     {{#if posts.length}}
       {{#each posts}}
         <!--placeholder post-->
@@ -70,7 +76,13 @@
             <div class="media">
               <div class="media-left">
                 <figure class="image is-48x48">
-                  <img src="https://bulma.io/assets/images/placeholders/96x96.png" class="is-rounded" alt="Placeholder image" />
+                  <img src=
+                  {{#if this.user.profile_pic}}
+                    "{{this.user.profile_pic}}"
+                  {{else}}
+                    "https://bulma.io/assets/images/placeholders/48x48.png"
+                  {{/if}}
+                  class="is-rounded" alt="Placeholder image" />
                 </figure>
               </div>
               <div class="media-content">
@@ -83,8 +95,10 @@
             </div>
 
             <div class="content">
+              <p class="title is-4">{{this.title}}</p>
               <p>{{this.content}}</p>
-              <button class="like-btn button is-primary" data-id="{{this.id}}">Like</button>
+              <button class="button is-primary ml-1 mr-1"><a class="has-text-black" href="/post/{{this.id}}">Comments</a></button>
+              <button class="like-btn button is-primary ml-1 mr-1" data-id="{{this.id}}">Like</button>
               <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
               <br />
               <p>Posted on {{format_date this.createdAt}}</p>
@@ -105,9 +119,13 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-left">
+
+                  {{!-- input user image --}}
                   <figure class="image is-48x48">
-                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" />
+                    <img class="is-rounded" src="https://bulma.io/assets/images/placeholders/128x128.png" /> 
                   </figure>
+
+
                 </div>
                 <div class="media-content">
                   <h2><a href="/chat/{{id}}">Chat with {{this.username}}</a></h2>
@@ -122,4 +140,3 @@
 </div>
 
 <script src="/js/likePost.js"></script>
-<script src="/js/follow.js"></script>

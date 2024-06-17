@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
       include: [
         {
           model: User,
-          attributes: ["username", "id"],
+          attributes: ["username", "id", "profile_pic"],
         },
       ],
     });
@@ -30,12 +30,12 @@ router.get("/", async (req, res) => {
           {
             model: User,
             as: "followers",
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "profile_pic"],
           },
           {
             model: User,
             as: "following",
-            attributes: ["id", "username"],
+            attributes: ["id", "username", "profile_pic"],
           },
         ],
       });
@@ -48,6 +48,7 @@ router.get("/", async (req, res) => {
       }
       const numFollowers = user.followers.length;
       const numFollowing = user.following.length;
+      const userProfilePic = user.profile_pic;
       let following = user.following.map((userFollowing) => userFollowing.get({ plain: true }));
       let followers = user.followers.map((userFollower) => userFollower.get({ plain: true }));
       const mutuals = following.filter(userFollowing => 
@@ -60,6 +61,7 @@ router.get("/", async (req, res) => {
         userPosts,
         numFollowers,
         numFollowing,
+        userProfilePic,
         numLikes,
         mutuals,
         logged_in: req.session.logged_in,
@@ -90,6 +92,10 @@ router.get("/dashboard", async (req, res) => {
       },
       include: [
         {
+          model: User,
+          attributes: ["username", "id", "profile_pic"],
+        },
+        {
           model: Comment,
           include: [User],
         },
@@ -101,68 +107,29 @@ router.get("/dashboard", async (req, res) => {
         {
           model: User,
           as: "followers",
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "profile_pic"],
         },
         {
           model: User,
           as: "following",
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "profile_pic"],
         },
       ],
     });
 
+    let following = userData.following.map((userFollowing) => userFollowing.get({ plain: true }));
+    let followers = userData.followers.map((userFollower) => userFollower.get({ plain: true }));
+    const userProfilePic = userData.profile_pic;
     const posts = postData.map((post) => post.get({ plain: true }));
     const user = userData.get({ plain: true });
 
     res.render("dashboard", {
       posts,
-      ...user,
-      logged_in: req.session.logged_in,
-      current_user_id: req.session.user_id,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-router.get("/post/:id", async (req, res) => {
-  try {
-    const postData = await Post.findByPk(req.params.id, {
-      include: [
-        {
-          model: User,
-          attributes: ["username", "id"],
-        },
-        {
-          model: Comment,
-          include: [User],
-        },
-      ],
-    });
-
-    const userData = await User.findByPk(postData.user.id, {
-      include: [
-        {
-          model: User,
-          as: "followers",
-          attributes: ["id", "username"],
-        },
-        {
-          model: User,
-          as: "following",
-          attributes: ["id", "username"],
-        },
-      ],
-    });
-
-    const user = userData.get({ plain: true });
-    user.isFollowing = user.followers.some(
-      (follow) => follow.id === req.session.user_id
-    );
-
-    const post = postData.get({ plain: true });
-    res.render("post", {
-      ...post,
+      following,
+      followers,
+      userProfilePic,
+      numFollowers: followers.length,
+      numFollowing: following.length,
       ...user,
       logged_in: req.session.logged_in,
       current_user_id: req.session.user_id,
@@ -181,18 +148,18 @@ router.get("/user/:id", async (req, res) => {
           attributes: ["id", "title", "content", "image_url", "numLikes", "createdAt"],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["username", "profile_pic"],
           },
         },
         {
           model: User,
           as: "followers",
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "profile_pic"],
         },
         {
           model: User,
           as: "following",
-          attributes: ["id", "username"],
+          attributes: ["id", "username", "profile_pic"],
         },
       ],
     });
@@ -202,8 +169,18 @@ router.get("/user/:id", async (req, res) => {
       (follow) => follow.id === req.session.user_id
     );
 
+    let following = user.following;
+    let followers = user.followers;
+    const mutuals = following.filter((userFollowing) =>
+      followers.some((userFollower) => userFollowing.id === userFollower.id)
+    );
+    const isMutual = mutuals.some((mutual) => mutual.id === req.session.user_id);
+
     res.render("user", {
       ...user,
+      isMutual,
+      numFollowers: user.followers.length,
+      numFollowing: user.following.length,
       logged_in: req.session.logged_in,
       current_user_id: req.session.user_id,
     });
@@ -248,6 +225,32 @@ router.get("/chat/:userId", async (req, res) => {
       other_user_id: otherUserId,
       other_username: otherUser.username,
       current_username: currentUser.username,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get("/post/:id", async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+        {
+          model: Comment,
+          include: [User],
+        },
+      ],
+    });
+
+    const post = postData.get({ plain: true });
+    res.render("post", {
+      ...post,
+      currentUserId: req.session.user_id,
+      logged_in: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);

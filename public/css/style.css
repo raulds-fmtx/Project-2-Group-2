@@ -1,141 +1,160 @@
 /* General page styles */
 
 header {
-    font-family: "Jomolhari", serif;
-  }
-  
-  /*body {
+  font-family: "Jomolhari", serif;
+}
+
+.heading{
+  font-size: large;
+}
+/*body {
     background-color: #a28089;
   }*/
+.custom-col-width{
+  width: 100%;
+}
+.custom-form-width {
+  width: 100%;
+}
 
-  .is-scrollable {
-    height: 100vh;
-    overflow-y: auto;
-  }
+.ui-autocomplete {
+  max-height: 100px;
+  overflow-y: auto;
+  /* prevent horizontal scrollbar */
+  overflow-x: hidden;
+  width: 300px;
+}
 
-  .fixed-grid {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
-  }
-  
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 100%;
-  }
-  
-  .cell {
-    background-color: #f5f5f5;
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: center;
-    position: relative;
-    width: 100%;
-  }
-  
-  .cell::before {
-    content: "";
-    display: block;
-    padding-bottom: 100%; /* This creates the 1:1 aspect ratio */
-  }
-  
-  .cell > * {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+.is-scrollable {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.fixed-grid {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.cell {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  position: relative;
+  width: 100%;
+}
+
+.cell::before {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  /* This creates the 1:1 aspect ratio */
+}
+
+.cell>* {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 
-  h1 {
-    font-family: "Jomolhari", serif;
-    background-color: teal;
-    color: #ffb3c6;
-    padding: 16px;
-    margin-bottom: 5px;
-  }
-  
-  #blogName {
-    color: #ffe5ec;
-  }
-  
-  /* main {
+h1 {
+  font-family: "Jomolhari", serif;
+  /* background-color: teal;
+  color: #ffb3c6; */
+  padding: 10px;
+  margin-bottom: 5px;
+  font-size: 26px;
+}
+
+#blogName {
+  color: #ffe5ec;
+}
+
+/* main {
     font-family: "Jomolhari", serif;
     margin-top: -5px;
     background-color: #a28089;
   } */
-  
-  .homepage-main {
-    margin-top: 34px;
-  }
-  
-  .user-name {
-    background-color: #84a59d;
-  }
-  
-  .blogPost-main {
-    margin-top: 34px;
-  }
-  
-  /* Nav styles */
-  
-  .navBar {
-    background-color: #00a0a0;
-  }
-  
-  /* #logout {
+
+.homepage-main {
+  margin-top: 34px;
+}
+
+.user-name {
+  background-color: #84a59d;
+}
+
+.blogPost-main {
+  margin-top: 34px;
+}
+
+/* Nav styles */
+
+.navBar {
+  background-color: #00a0a0;
+}
+
+/* #logout {
     background-color: #84a59d;
   } */
-  
-  .custom-input-width {
-    width: 50%;
-  }
-  
-  /* Input/textarea styles */
-  
-  #titleInput,
-  #bodyInput,
-  #comment,
-  #email-login,
-  #password-login,
-  #name-signup,
-  #email-signup,
-  #password-signup {
-    background-color: #e5eaf5;
-  }
-  
-  /* Button styles */
-  
-  .btn {
-    background-color: #ffb3c6;
-  }
-  
-  /* Card styles */
-  
-  .card-header {
-    background-color: #e5eaf5;
-  }
 
-  .chatCard {
-    width: 100%;
-  }
-  
-  /* .card-body {
+.custom-input-width {
+  width: 50%;
+}
+
+/* Input/textarea styles */
+
+#titleInput,
+#bodyInput,
+#comment,
+#email-login,
+#password-login,
+#name-signup,
+#email-signup,
+#password-signup {
+  background-color: #e5eaf5;
+}
+
+/* Button styles */
+
+.btn {
+  background-color: #ffb3c6;
+}
+
+/* Card styles */
+
+.card-header {
+  background-color: #e5eaf5;
+}
+
+.chatCard {
+  width: 100%;
+}
+
+/* .card-body {
     background-color: #ffe5ec;
   }
   
   .card {
     background-color: #ffe5ec;
   } */
-  
-  .card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transform: scale(1.02);
-    transition: all 0.3s ease;
-  }
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
 
 .footer {
   --bulma-footer-padding: 1rem 1.5rem 2rem;
