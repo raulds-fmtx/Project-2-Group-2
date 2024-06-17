@@ -18,9 +18,14 @@
     <h1 class="is-primary">{{username}}</h1>
 
     {{!-- follow user button --}}
-    <button data-id="{{id}}" class="follow-btn button is-primary {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
-      {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
-    </button>
+    <div class="is-flex is-flex-direction-row is-align-items-center">
+      <button data-id="{{id}}" class="follow-btn button is-primary mr-1 ml-1 {{#if isFollowing}}unfollow{{else}}follow{{/if}}">
+        {{#if isFollowing}}Unfollow{{else}}Follow{{/if}}
+      </button>
+      {{#if isMutual}}
+        <p class="button is-primary mr-1 ml-1"><a class="has-text-black" href="/chat/{{id}}">Chat</a></p>
+      {{/if}}
+    </div>
 
     {{!-- followers and following label --}}
     <nav class="level py-2 ">
@@ -155,3 +160,4 @@
 
 <script src="/js/follow.js"></script>
 <script src="/js/likePost.js"></script>
+<script src="/js/createChat.js"></script>

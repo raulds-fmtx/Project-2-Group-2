@@ -169,8 +169,16 @@ router.get("/user/:id", async (req, res) => {
       (follow) => follow.id === req.session.user_id
     );
 
+    let following = user.following;
+    let followers = user.followers;
+    const mutuals = following.filter((userFollowing) =>
+      followers.some((userFollower) => userFollowing.id === userFollower.id)
+    );
+    const isMutual = mutuals.some((mutual) => mutual.id === req.session.user_id);
+
     res.render("user", {
       ...user,
+      isMutual,
       numFollowers: user.followers.length,
       numFollowing: user.following.length,
       logged_in: req.session.logged_in,

@@ -81,8 +81,6 @@ DB_PASSWORD=your_postgresql_password
 SESSION_SECRET=your_session_secret
 
 TODO:
-Add search access for users
-Add chat button to user/ page
 Add /post page and comment section
 Add styling and extra listeners to chat
 
