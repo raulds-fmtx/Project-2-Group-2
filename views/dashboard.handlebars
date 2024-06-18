@@ -3,23 +3,15 @@
   {{!-- user col --}}
   <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-full-width">
 
-    {{!-- user pic --}}
-    <!-- User prof img -->
-    <figure class="image is-128x128">
-      <img src=
-      {{#if userProfilePic}}
-        "{{userProfilePic}}"
-      {{else}}
-        "https://bulma.io/assets/images/placeholders/128x128.png"
-      {{/if}}
-      class="is-rounded" alt="Placeholder image" />
-    </figure>
-
     {{!-- username --}}
-    <h1 class="is-primary">{{username}}</h1>
+    <h1>{{username}}</h1>
 
-    {{!-- follow user button --}}
-    {{!-- <button class="button is-primary" id="followBtn">follow '{{username}}'</button> --}}
+    {{!-- user pic --}}
+    <figure id="dashUserPic" class="image is-128x128">
+      <img src={{#if userProfilePic}} "{{userProfilePic}}"
+        {{else}} "https://bulma.io/assets/images/placeholders/128x128.png" {{/if}} class="is-rounded"
+        alt="Placeholder image" />
+    </figure>
 
     {{!-- followers and following label --}}
     <nav class="level py-2 ">
@@ -46,52 +38,44 @@
 
         {{!-- follower card --}}
         {{#each followers}}
-          <div class="card followerCard">
-            <div class="card-content">
-              <div class="media is-flex is-justify-content-baseline">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src=
-                    {{#if this.profile_pic}}
-                      "{{this.profile_pic}}"
-                    {{else}}
-                      "https://bulma.io/assets/images/placeholders/48x48.png"
-                    {{/if}}
-                    class="is-rounded" alt="Placeholder image" />
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
-                </div>
+        <div class="card followerCard">
+          <div class="card-content">
+            <div class="media is-flex is-justify-content-baseline">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src={{#if this.profile_pic}} "{{this.profile_pic}}"
+                    {{else}} "https://bulma.io/assets/images/placeholders/48x48.png" {{/if}} class="is-rounded"
+                    alt="Placeholder image" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
               </div>
             </div>
           </div>
+        </div>
         {{/each}}
       </div>
 
       {{!-- following --}}
       <div class="column is-one-half is-scrollable">
         {{#each following}}
-          <div class="card followerCard">
-            <div class="card-content">
-              <div class="media is-flex is-justify-content-baseline">
-                <div class="media-left">
-                  <figure class="image is-48x48">
-                    <img src=
-                    {{#if this.profile_pic}}
-                      "{{this.profile_pic}}"
-                    {{else}}
-                      "https://bulma.io/assets/images/placeholders/48x48.png"
-                    {{/if}}
-                    class="is-rounded" alt="Placeholder image" />
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
-                </div>
+        <div class="card followerCard">
+          <div class="card-content">
+            <div class="media is-flex is-justify-content-baseline">
+              <div class="media-left">
+                <figure class="image is-48x48">
+                  <img src={{#if this.profile_pic}} "{{this.profile_pic}}"
+                    {{else}} "https://bulma.io/assets/images/placeholders/48x48.png" {{/if}} class="is-rounded"
+                    alt="Placeholder image" />
+                </figure>
+              </div>
+              <div class="media-content">
+                <p><a href="/user/{{this.id}}">{{this.username}}</a></p>
               </div>
             </div>
           </div>
+        </div>
         {{/each}}
       </div>
     </div>
@@ -100,52 +84,49 @@
   {{!-- col for posts --}}
   <div class="column is-one-third is-flex is-flex-direction-column is-align-items-center is-scrollable">
     {{#if posts.length}}
-      {{#each posts}}
-        <!--placeholder post-->
-        <div class="card">
-          {{#if this.image_url}}
-            <div class="card-image">
-              <figure class="image">
-                <img src="{{this.image_url}}" width="1280" alt="Post image" />
-              </figure>
-            </div>
-          {{/if}}
-          <div class="card-content">
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img src=
-                  {{#if this.user.profile_pic}}
-                    "{{this.user.profile_pic}}"
-                  {{else}}
-                    "https://bulma.io/assets/images/placeholders/48x48.png"
-                  {{/if}}
-                  class="is-rounded" alt="Placeholder image" />
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-4">{{../username}}</p>
-              </div>
-            </div>
-
-            <div class="content">
-              <p class="title is-4">{{this.title}}</p>
-              <p>{{this.content}}</p>
-              <button class="button is-primary ml-1 mr-1"><a class="has-text-black" href="/post/{{this.id}}">Comments</a></button>
-              <button class="like-btn button is-primary ml-1 mr-1" data-id="{{this.id}}">Like</button>
-              <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
-              <br />
-              <p>Posted on {{format_date this.createdAt}}</p>
-            </div>
+    {{#each posts}}
+    <!--placeholder post-->
+    <div class="card">
+      {{#if this.image_url}}
+      <div class="card-image">
+        <figure class="image">
+          <img src="{{this.image_url}}" width="1280" alt="Post image" />
+        </figure>
+      </div>
+      {{/if}}
+      <div class="card-content">
+        <div class="media">
+          <div class="media-left">
+            <figure id="tinyUserPic" class="image is-48x48">
+              <img src={{#if this.user.profile_pic}} "{{this.user.profile_pic}}"
+                {{else}} "https://bulma.io/assets/images/placeholders/48x48.png" {{/if}} class="is-rounded"
+                alt="Placeholder image" />
+            </figure>
           </div>
-          <div class="card-footer">
-            <button class="edit-post-btn button" data-id="{{this.id}}">Edit</button>
-            <button class="delete-post-btn button" data-id="{{this.id}}">Delete</button>
+          <div class="media-content">
+            <p class="title is-4">{{../username}}</p>
           </div>
         </div>
-      {{/each}}
+
+        <div class="content">
+          <p class="title is-4">{{this.title}}</p>
+          <p>{{this.content}}</p>
+          <button class="button is-primary ml-1 mr-1"><a class="has-text-black"
+              href="/post/{{this.id}}">Comments</a></button>
+          <button class="like-btn button is-primary ml-1 mr-1" data-id="{{this.id}}">Like</button>
+          <span id="like-count-{{this.id}}">{{this.numLikes}} likes</span>
+          <br />
+          <p>Posted on {{format_date this.createdAt}}</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button class="edit-post-btn button" data-id="{{this.id}}">Edit</button>
+        <button class="delete-post-btn button" data-id="{{this.id}}">Delete</button>
+      </div>
+    </div>
+    {{/each}}
     {{else}}
-      <p>No posts yet</p>
+    <h1>No posts yet</h1>
     {{/if}}
   </div>
 
@@ -155,15 +136,14 @@
     {{!-- form start --}}
     <form id="new-post-form" enctype="multipart/form-data">
       {{!-- title --}}
-      <div class="field">
-        <label class="text-label">Title</label>
+      <div class="field mt-4">
         <div class="control custom-form-width">
-          <input class="text-input" type="text" name="title" id="post-title" placeholder="Title" required>
+          <input class="input is-primary text-input" type="text" placeholder="Title" id="post-title" required />
         </div>
       </div>
-      
+
       {{!-- file --}}
-      <div id="file-js" class="file has-name is-primary">
+      <div id="file-js" class="file has-name is-primary my-4">
         <label class="file-label">
           <input class="file-input" type="file" name="image" id="post-image">
           <span class="file-cta">
@@ -178,14 +158,13 @@
 
       {{!-- caption --}}
       <div class="field">
-        <label class="text-label">Caption</label>
         <div class="control custom-form-width">
-          <textarea class="textarea is-hovered" name="content" id="post-content" placeholder="Caption" required></textarea>
+          <textarea class="textarea is-primary" name="content" id="post-content" placeholder="Caption" required></textarea>
         </div>
       </div>
 
       {{!-- button --}}
-      <button class="button is-primary mt-3 custom-form-width" type="submit">Add Post</button>
+      <button class="button is-primary mt-2 custom-form-width" type="submit">Add Post</button>
     </form>
   </div>
 </div>

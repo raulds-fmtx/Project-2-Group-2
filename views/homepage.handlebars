@@ -2,10 +2,11 @@
   {{#if logged_in}}
     <!--col for user data-->
     <div class="column is-one-quarter is-flex is-flex-direction-column is-align-items-center">
-      <p>{{current_username}}</p>
+          {{!-- username --}}
+    <h1>{{current_username}}</h1>
 
       <!-- User prof img -->
-      <figure class="image is-128x128">
+      <figure id="dashUserPic" class="image is-128x128">
         <img src=
         {{#if userProfilePic}}
           "{{userProfilePic}}"
@@ -14,6 +15,7 @@
         {{/if}}
         class="is-rounded" alt="Placeholder image" />
       </figure>
+      <br>
 
       <!--user data-->
       <nav class="level">
@@ -45,7 +47,7 @@
 
       <!--users recent photos-->
       <div class="fixed-grid has-3-cols">
-        <div class="grid">
+        <div class="grid m-1">
           {{#if userPosts.length}}
             {{#each userPosts}}
               {{#if this.image_url}}
@@ -75,7 +77,7 @@
           <div class="card-content">
             <div class="media">
               <div class="media-left">
-                <figure class="image is-48x48">
+                <figure id="tinyUserPic" class="image is-48x48">
                   <img src=
                   {{#if this.user.profile_pic}}
                     "{{this.user.profile_pic}}"
@@ -112,7 +114,7 @@
   <!--col for chat-->
   {{#if logged_in}}
     <div class="column is-one-quarter is-flex is-flex-direction-column is-align-items-center is-scrollable">
-      <h2>Chat</h2>
+    <h1>Chat</h1>
       {{#if mutuals.length}}
         {{#each mutuals}}
           <div class="card chatCard">
